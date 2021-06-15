@@ -1,0 +1,22 @@
+<template>
+  <div class="home-main">
+    <slot>
+
+    </slot>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "HomeMain"
+}
+</script>
+
+<style scoped>
+.home-main{
+  width: 980px;
+  min-width: 980px;
+  margin: 0 auto;
+
+}
+</style>

@@ -1,0 +1,25 @@
+a{
+    text-decoration: navajowhite;
+
+}
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+html {
+    overflow-y: scroll;
+
+}
+.el-icon-loading{
+    font-size: 60px;
+
+}
+.el-loading-text{
+    font-size: 30px;
+
+}
+a{
+    text-decoration: none;
+    color: #303133;
+}
