@@ -1,5 +1,8 @@
 <template>
  <div class="article-content-box">
+   <my-mask :is-show="isShow">
+      <pay @shutDownClick="shutDownClick"></pay>
+   </my-mask>
    <div class="article-content">
      <div class="left" >
        <h1 class="title">{{list.title}}</h1>
@@ -10,11 +13,14 @@
           </div>
 
        </div>
-       <favorites :article-id="id"></favorites>
+       <favorites @rewardClick="rewardClick" :article-id="id"></favorites>
+
+
      </div>
      <div class="right"></div>
    </div>
    <my-footer></my-footer>
+
  </div>
 </template>
 
@@ -24,23 +30,29 @@ import MyFooter from "../../../components/content/footer/MyFooter";
 import {Getlike} from "../../../network/article";
 import {Setlike} from "../../../network/article";
 import Favorites from "./child/Favorites";
+import myMask from "../../../components/content/mask/myMask";
+import Pay from "./child/Pay";
 export default {
   name: "Content",
   data(){
     return{
       id:null,
       list:[],
-      like:0
+      like:0,
+      isShow:false,
+
     }
   },
   components:{
     MyFooter,
-    Favorites
+    Favorites,
+    myMask,
+    Pay,
   },
   created() {
     this.id=this.$route.query.id
     this.GetarticleContent(this.id);
-    this.Getlike({id:this.id})
+    this.Getlike({id:this.id});
 
   },
   methods:{
@@ -84,9 +96,9 @@ export default {
       })
     },
     setLikeClick(){
-      this.$refs.likeimg.classList.add("active")
+      this.$refs.likeimg.classList.add("active_20210617")
       setTimeout(()=>{
-        this.$refs.likeimg.classList.remove("active")
+        this.$refs.likeimg.classList.remove("active_20210617")
       },1000)
       let obj={
         id:this.id,
@@ -97,7 +109,14 @@ export default {
         this.Getlike({id:this.id})
       },50)
 
+    },
+    rewardClick(){
+      this.isShow=true
+    },
+    shutDownClick(){
+      this.isShow=false
     }
+
   }
 }
 </script>
@@ -105,6 +124,7 @@ export default {
 <style >
 .article-content-box{
   background-color: rgb(243,244,245);
+  position: relative;
 }
 .article-content{
   padding-top: 72px;
@@ -179,7 +199,8 @@ p img {
     transform:scale(1) rotate(360deg);
   }
 }
-.active{
+.active_20210617{
   animation: Spin .5s linear forwards;
 }
+
 </style>

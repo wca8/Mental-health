@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isToken:false
+    isToken:false,
+    isPay:false,
+    obj:'',
   },
   mutations: {
     changeToken(state){
@@ -13,7 +15,22 @@ export default new Vuex.Store({
     },
     removeToken(state){
       state.isToken=false
-    }
+    },
+    SetPay(state){
+      state.isPay=true;
+      // console.log(state.isPay)
+
+    },
+    SetPay2(state){
+      state.isPay=false;
+      // console.log(state.isPay)
+
+    },
+    SetPayInfo(state,payload){
+      state.obj='';
+      state.obj = payload;
+    },
+
   },
   actions: {
   },

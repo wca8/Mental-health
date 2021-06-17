@@ -2,7 +2,7 @@
   <div class="Favorites">
     <div class="main">
       <div @click="addClick"><i class="iconfont icon-add"></i>收藏</div>
-      <div><i class="iconfont icon-qian"></i>打赏</div>
+      <div @click="rewardClick"><i class="iconfont icon-qian"></i>打赏</div>
     </div>
   </div>
 </template>
@@ -39,7 +39,10 @@ export default {
       SetFav(obj).then(res=>{
         console.log(res)
       })
-    }
+    },
+    rewardClick(){
+      this.$emit("rewardClick")
+    },
   }
 }
 </script>

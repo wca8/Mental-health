@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive exclude="myPay">
       <router-view/>
     </keep-alive>
     <top-nav-bar></top-nav-bar>
@@ -20,5 +20,5 @@
 </script>
 <style>
 @import "assets/css/normalize.css";
-@import "//at.alicdn.com/t/font_2600984_fcg4tpwozvm.css";
+@import "//at.alicdn.com/t/font_2600984_s1h4pt2gbs.css";
 </style>

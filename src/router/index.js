@@ -17,6 +17,8 @@ const Article=()=>import('@/views/other/user/child/tabcontrolChild/Article')
 const Like=()=>import('@/views/other/user/child/tabcontrolChild/Like')
 const Buddy=()=>import('@/views/other/user/child/tabcontrolChild/Buddy')
 const Vip=()=>import('@/views/other/user/child/tabcontrolChild/Vip')
+const Reward=()=>import('@/views/other/reward/Reward')
+const myPay=()=>import('@/views/other/myPay/myPay')
 Vue.use(VueRouter)
 
 const routes = [
@@ -145,7 +147,22 @@ const routes = [
         component:Buddy
       }
     ]
-  }
+  },
+  {
+    path: '/reward',
+    component:Reward,
+    meta:{
+      title:"心理栈-打赏中心"
+    }
+  },
+  {
+    path: '/pay/:other',
+    component: myPay,
+    meta:{
+      title:"心理栈-支付中心"
+    }
+  },
+
 
 ]
 

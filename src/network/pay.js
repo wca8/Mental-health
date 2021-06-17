@@ -9,3 +9,14 @@ export function GetPay(obj){
         }
     })
 }
+
+
+export function GetPayStatus(obj){
+    return  request({
+        url:'/pay/query',
+        method: 'GET',
+        params:{
+            ...obj
+        }
+    })
+}

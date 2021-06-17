@@ -7,7 +7,9 @@ import 'swiper/swiper-bundle.css'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import toast from 'components/common/toast'
-
+// import mask from 'components/content/mask'
+//安装toast插件
+// Vue.use(mask)
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 Vue.use(ElementUI);
