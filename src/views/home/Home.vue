@@ -6,7 +6,7 @@
             @tabClick="sortTitlesClick"
             :titles="sortTitles"></tab-control>
         <home-article :article-list="articleList"></home-article>
-
+        <home-ask></home-ask>
     </home-main>
     <my-footer></my-footer>
   </div>
@@ -23,6 +23,7 @@ import HomeMain from "./child/HomeMain";
 import TabControl from "@/components/content/tabcontrol/TabControl";
 import HomeArticle from "./child/HomeArticle";
 import MyFooter from "../../components/content/footer/MyFooter";
+import HomeAsk from "./child/HomeAsk";
 import axios from "axios";
 export default {
   name: "Home",
@@ -32,6 +33,7 @@ export default {
     HomeMain,
     HomeArticle,
     MyFooter,
+    HomeAsk,
   },
   data(){
     return{
@@ -62,6 +64,7 @@ export default {
     GetArticleList(categoryId){
       GetarticleList(categoryId).then(res=>{
         this.articleList=res.data;
+        console.log(res)
 
       })
     },

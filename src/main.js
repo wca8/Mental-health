@@ -10,6 +10,12 @@ import toast from 'components/common/toast'
 // import mask from 'components/content/mask'
 //安装toast插件
 // Vue.use(mask)
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+// use
+Vue.use(mavonEditor)
+
+
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 Vue.use(ElementUI);

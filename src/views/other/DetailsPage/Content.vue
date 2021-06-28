@@ -4,23 +4,36 @@
       <pay @shutDownClick="shutDownClick"></pay>
    </my-mask>
    <div class="article-content">
-     <div class="left" >
+     <div class="left0" >
        <h1 class="title">{{list.title}}</h1>
+
+       <info :list-info="list"></info>
+
        <div v-html="list.content"></div>
+
+       <pre-next :category-id="categoryId" :pre-next-list="preNextList"></pre-next>
+
        <div class="like0">
           <div ref="likeimg" @click="setLikeClick" class="like-img">
            <h2>{{like}}</h2>
           </div>
 
        </div>
+
        <favorites @rewardClick="rewardClick" :article-id="id"></favorites>
 
+       <comment :article-id="id"></comment>
 
      </div>
-     <div class="right"></div>
-   </div>
-   <my-footer></my-footer>
+     <div class="right0">
+       <author :like="like"></author>
+       <recommend :category-id="categoryId"></recommend>
+       
+     </div>
 
+   </div>
+   <my-footer ref="my_footer"></my-footer>
+   <back-top @click.native="backTopClick" v-show="isShowBackTop"></back-top>
  </div>
 </template>
 
@@ -32,15 +45,27 @@ import {Setlike} from "../../../network/article";
 import Favorites from "./child/Favorites";
 import myMask from "../../../components/content/mask/myMask";
 import Pay from "./child/Pay";
+import Comment from "./child/Comment";
+import Recommend from "./child/Recommend";
+import Author from "./child/Author";
+import BackTop from "../../../components/content/backTop/BackTop";
+import Info from "./child/Info";
+import {GetPreNext} from "../../../network/article";
+import PreNext from "./child/PreNext";
+
 export default {
   name: "Content",
   data(){
     return{
       id:null,
-      list:[],
+      categoryId:null,
+      list:{},
       like:0,
       isShow:false,
-
+      scrollTop:0,
+      isFlag:true,
+      isShowBackTop:false,
+      preNextList:{},
     }
   },
   components:{
@@ -48,23 +73,52 @@ export default {
     Favorites,
     myMask,
     Pay,
+    Comment,
+    Recommend,
+    Author,
+    BackTop,
+    Info,
+    PreNext,
   },
   created() {
-    this.id=this.$route.query.id
+    this.id=this.$route.query.id;
+    this.categoryId=this.$route.query.categoryId;
     this.GetarticleContent(this.id);
     this.Getlike({id:this.id});
-
+    this.GetPreNext({id:this.id})
+  },
+  mounted() {
+    // 监听滚动事件
+    // document.getElementById("blockmain").addEventListener("scroll", this.handleScroll)
+    // window.addEventListener('scroll', this.handleScroll)
+    this.$nextTick(function () {
+      window.addEventListener('scroll', this.handleScroll)
+    })
+  },
+  destroy() {
+    // 必须移除监听器，不然当该vue组件被销毁了，监听器还在就会出错
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods:{
+    GetPreNext(obj){
+      GetPreNext(obj).then(res=>{
+        // console.log(res)
+        this.preNextList= {...res.data};
+        console.log(this.preNextList)
+
+      })
+    },
     GetarticleContent(id){
       GetarticleContent(id).then(res=>{
-        this.list=res.data.info
 
+        this.list=res.data.info;
+        console.log(res)
+        // console.log(this.list)
       })
     },
     Getlike(obj){
       Getlike(obj).then(res=>{
-        console.log(res)
+        // console.log(res)
         // console.log("获取开始")
         if(res.code==700){
           this.like=0
@@ -115,57 +169,93 @@ export default {
     },
     shutDownClick(){
       this.isShow=false
+    },
+    handleScroll(){
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop//获取滚动距离
+      this.scrollTop = scrollTop//data里return了一个全局的scrollTop
+      let footerTop=this.$refs.my_footer.$el.offsetTop-(window.innerHeight-130)
+      // console.log(footerTop)
+      // console.log("scrollTop"+this.scrollTop)
+      if(this.scrollTop>348&&this.scrollTop<footerTop){
+        if(this.isFlag){
+          this.scrollTop=false;
+          this.isShowBackTop=true;
+          document.querySelector('.right0').classList.add('active20210620')
+        }
+
+      } else if(this.scrollTop<348||this.scrollTop>=footerTop) {
+        this.isShowBackTop=false;
+        document.querySelector('.right0').classList.remove('active20210620')
+        // document.querySelector('.right0').classList.add('active20210621')
+
+      }
+
+
+
+
+
+
+    },
+    backTopClick(){
+      console.log(1)
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     }
 
   }
 }
+
 </script>
 
 <style >
 .article-content-box{
   background-color: rgb(243,244,245);
   position: relative;
+  padding-top: 72px;
 }
 .article-content{
-  padding-top: 72px;
-  width: 1180px;
+
+  width: 1184px;
   margin: 0 auto;
   /*padding: 72px 12% 0 12%;*/
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
+  margin-top: 20px;
 
 }
 .article-content .title{
-  padding: 15px 0 25px 0;
+  padding: 15px 0 5px 0;
 }
-.article-content .left {
+.article-content .left0 {
   background-color: white;
   padding: 20px 80px 80px 80px;
   box-sizing: border-box;
 
 }
-.article-content .left p{
+.article-content .left0 p{
   width: 100%;
   text-indent: 2em;
   box-sizing: border-box;
 }
-.article-content .left h1{
+.article-content .left0 h1{
   text-align: center;
 }
 p img {
   display: block;
 }
-.article-content .left  img{
+.article-content .left0  img{
   width:100%;
 }
 
-.article-content .left{
-  flex: 7;
+.article-content .left0{
+ width: 830px;
 }
-.article-content .right{
-  flex: 3;
-
+.article-content .right0{
+  width: 335px;
+  /*margin-left: 25px;*/
+  height: 120vh;
+  background-color: #fff;
 }
 .like0{
   margin-top: 50px;
@@ -202,5 +292,22 @@ p img {
 .active_20210617{
   animation: Spin .5s linear forwards;
 }
-
+.active20210620{
+  position: fixed;
+  top: -250px;
+  right: 11%;
+  width: 335px!important;
+  animation: opacity 1s linear forwards;
+}
+.active20210621{
+  animation: opacity 1s linear reverse forwards;
+}
+@keyframes opacity {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
 </style>

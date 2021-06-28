@@ -1,0 +1,26 @@
+
+.item{
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.title{
+    justify-content: space-between;
+}
+.title,.title-0{
+    display: flex;
+    align-items: center;
+}
+.content{
+    margin: 20px 0;
+}
+.title-0>div{
+    display: flex;
+    align-items: center;
+}
+.Avatar{
+    margin-right: 10px;
+    opacity: .8;
+}

@@ -18,15 +18,20 @@ export function GetSortTitles(shopId=0){
     })
 }
 
-export function GetarticleList(categoryId,pageSize=8){
+export function GetarticleList(categoryId,page=1,pageSize=8){
     return  request({
         url:'/cms/news/list',
         params:{
             categoryId,
+            page,
             pageSize,
+
         }
     })
 }
+
+
+
 
 
 
@@ -39,5 +44,20 @@ export function GetarticleContent(id){
         }
     })
 }
+
+
+
+
+export function GetSortTitles0(shopId=30239){
+    return  request({
+        url:'/cms/category/list',
+        params:{
+            shopId
+
+        }
+    })
+}
+
+
 
 

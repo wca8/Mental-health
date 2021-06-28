@@ -20,5 +20,5 @@
 </script>
 <style>
 @import "assets/css/normalize.css";
-@import "//at.alicdn.com/t/font_2600984_s1h4pt2gbs.css";
+@import "//at.alicdn.com/t/font_2600984_fgo5re3e3ya.css";
 </style>

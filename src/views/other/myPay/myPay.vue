@@ -87,10 +87,10 @@ export default {
         }
         time= setInterval(()=>{
           this.GetPayStatus(obj)
-          // console.log("我在检测支付中...")
+          console.log("我在检测支付中...")
           if(this.$store.state.isPay){
             clearInterval(time);
-            // console.log("已结束检测，支付成功!")
+            console.log("已结束检测，支付成功!")
             this.$router.go(-1);
             this.$message({
               message: '支付成功',
@@ -107,7 +107,7 @@ export default {
     },
     GetPayStatus(obj){
       GetPayStatus(obj).then(res=>{
-        // console.log(res)
+        console.log(res)
         if(res.data.statusStr=="成功"){
           this.setPay()
         }

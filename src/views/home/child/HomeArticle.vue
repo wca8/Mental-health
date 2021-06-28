@@ -1,8 +1,9 @@
 <template>
   <div class="home-article">
     <div
+
         v-for="item in articleList"
-        @click="articleClick(item.id)"
+        @click="articleClick(item.id,item.categoryId)"
         class="home-article-item">
 <!--      <a target="_blank" :href="'http://localhost:8081/content/'+item.id">-->
         <div class="image">
@@ -29,7 +30,8 @@ export default {
       default(){
         return []
       }
-    }
+    },
+
   },
   data(){
     return{
@@ -48,9 +50,9 @@ export default {
     }
   },
   methods:{
-    articleClick(id){
+    articleClick(id,categoryId){
       // this.id=id
-      let routeData = this.$router.resolve({ path: '/content', query: {  id } });
+      let routeData = this.$router.resolve({ path: '/content', query: {  id,categoryId } });
       window.open(routeData.href, '_blank');
     }
   },

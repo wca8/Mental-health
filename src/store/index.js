@@ -8,6 +8,7 @@ export default new Vuex.Store({
     isToken:false,
     isPay:false,
     obj:'',
+    isSetClass:false,
   },
   mutations: {
     changeToken(state){
@@ -30,7 +31,12 @@ export default new Vuex.Store({
       state.obj='';
       state.obj = payload;
     },
-
+    setClass(state){
+      state.isSetClass=true
+    },
+    removeClass(state){
+      state.isSetClass=false
+    }
   },
   actions: {
   },

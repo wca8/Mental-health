@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style scoped>
+.Favorites{
+
+}
 .main{
   display: flex;
   justify-content: center;
@@ -63,6 +66,10 @@ export default {
   cursor: pointer;
   background-color: rgba(74,179,68,.9);
   color: white;
+
+}
+.Favorites{
+  padding-bottom: 40px;
 
 }
 </style>

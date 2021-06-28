@@ -10,7 +10,10 @@
     "@popperjs/core": "^2.9.2",
     "axios": "^0.21.1",
     "element-ui": "^2.15.2",
-    "qrcodejs2": "^0.0.2",
+    "github-markdown-css": "^4.0.0",
+    "marked": "^2.1.1",
+    "mavon-editor": "^2.9.1",
+    "qrcodejs2": "0.0.2",
     "save": "^2.4.0",
     "urlencode": "^1.1.0",
     "vue": "^2.6.11",
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@vue/cli-service": "^4.5.0",
     "popper.js": "^1.16.1",
+    "qs": "^6.10.1",
     "swiper": "^6.6.2",
     "vue-template-compiler": "^2.6.11"
   },

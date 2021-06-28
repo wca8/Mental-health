@@ -1,13 +1,13 @@
 //debounce 防抖动
-// export function debounce(func,delay){
-//   let timer=null
-//   return function (...args){
-//     if(timer){clearTimeout(timer)}
-//     timer=setTimeout(()=>{
-//       func.apply(this,args)
-//     },delay)
-//   }
-// }
+export function isEmpty(obj) {
+  if (typeof obj == "undefined" || obj == null || obj == "") {
+    return true;
+  }else{
+    return  false
+  }
+}
+
+
 export function debounce(func, delay=50) {
   let timer = null;
   return function (...args) {

@@ -1,6 +1,6 @@
 <template>
   <div class="back-top">
-    <img src="~assets/img/common/top.png" alt="">
+    <i class="el-icon-upload2"></i>
   </div>
 </template>
 
@@ -14,7 +14,17 @@ name: "BackTop"
 .back-top{
   position: fixed;
   bottom:60px ;
-  right: 10px;
+  right: 3%;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  background-color: rgb(191,191,192);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
 }
 .back-top img{
   width: 43px;

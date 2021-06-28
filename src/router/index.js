@@ -19,6 +19,10 @@ const Buddy=()=>import('@/views/other/user/child/tabcontrolChild/Buddy')
 const Vip=()=>import('@/views/other/user/child/tabcontrolChild/Vip')
 const Reward=()=>import('@/views/other/reward/Reward')
 const myPay=()=>import('@/views/other/myPay/myPay')
+const PostAnArticle=()=>import('@/views/other/Post_an_article/PostAnArticle')
+const AskQuestions=()=>import('@/views/other/Ask_questions/AskQuestions')
+const QuestionDetails=()=>import('@/views/other/Question_details/QuestionDetails')
+const ControlCenter=()=>import('@/views/other/controlCenter/ControlCenter')
 Vue.use(VueRouter)
 
 const routes = [
@@ -155,11 +159,37 @@ const routes = [
       title:"心理栈-打赏中心"
     }
   },
+
   {
     path: '/pay/:other',
     component: myPay,
     meta:{
       title:"心理栈-支付中心"
+    }
+  },
+  {
+    path: '/PostAnArticle',
+    component:PostAnArticle,
+    meta:{
+      title:"心理栈-发布文章"
+    }
+  },{
+    path: '/AskQuestions',
+    component:AskQuestions,
+    meta:{
+      title:"心理栈-在线提问"
+    }
+  },{
+    path: '/QuestionDetails',
+    component:QuestionDetails,
+    meta:{
+      title:"心理栈-提问详情"
+    }
+  },{
+    path: '/ControlCenter',
+    component:ControlCenter,
+    meta:{
+      title:"心理栈-管理中心"
     }
   },
 

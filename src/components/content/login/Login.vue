@@ -7,8 +7,7 @@
          <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>设置</el-dropdown-item>
-          <el-dropdown-item>修改密码</el-dropdown-item>
+          <el-dropdown-item @click.native="ControlCenterClick">管理中心</el-dropdown-item>
           <el-dropdown-item   @click.native="signOut">退出登录</el-dropdown-item>
 
         </el-dropdown-menu>
@@ -39,6 +38,9 @@ export default {
 
   },
   methods:{
+    ControlCenterClick(){
+      this.$router.push('/ControlCenter')
+    },
     changeToken() {
       this.$store.commit('changeToken')
     },
