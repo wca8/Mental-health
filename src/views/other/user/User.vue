@@ -26,7 +26,8 @@ import TabControl from "./child/TabControl";
 import MyFooter from "../../../components/content/footer/MyFooter";
 import {GetUserInfo} from "../../../network/login";
 import {Getlike} from "../../../network/article";
-import {GetFav} from "../../../network/article";
+import {mapState} from "vuex";
+
 
 export default {
   name: "User",
@@ -38,11 +39,20 @@ export default {
   data(){
     return{
       userInfoList:{},
+      token:'',
     }
   },
+  watch:{
+    userInfoChange(){
+      this.GetUserInfo(this.token)
+    }
+  },
+  computed:{
+    ...mapState("user", ["userInfoChange"]),
+  },
   created() {
-    let token=localStorage.getItem('elementToken')
-    this.GetUserInfo(token)
+    this.token=localStorage.getItem('elementToken')
+    this.GetUserInfo(this.token)
     let obj={
       id:this.id,
       token:localStorage.getItem('elementToken')
@@ -53,15 +63,12 @@ export default {
   methods:{
     GetUserInfo(token){
       GetUserInfo(token).then(res=>{
-        // console.log(res)
-        this.userInfoList=res.data.base
-        // console.log(this.userInfoList)
-        // console.log("测试")
+        this.userInfoList=res.data.base;
       })
     },
     Getlike(obj){
       Getlike(obj).then(res=>{
-        // console.log(res)
+
       })
     },
 
@@ -70,9 +77,6 @@ export default {
 </script>
 
 <style scoped>
-body{
-
-}
 #user{
   padding-top: 72px;
   background-color: rgb(248, 247, 247);

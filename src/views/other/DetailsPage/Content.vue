@@ -25,7 +25,7 @@
        <comment :article-id="id"></comment>
 
      </div>
-     <div class="right0">
+     <div class="right0" ref="right0">
        <author :like="like"></author>
        <recommend :category-id="categoryId"></recommend>
        
@@ -102,18 +102,13 @@ export default {
   methods:{
     GetPreNext(obj){
       GetPreNext(obj).then(res=>{
-        // console.log(res)
         this.preNextList= {...res.data};
-        console.log(this.preNextList)
-
       })
     },
     GetarticleContent(id){
       GetarticleContent(id).then(res=>{
-
         this.list=res.data.info;
-        console.log(res)
-        // console.log(this.list)
+        document.title=this.list.title||'';
       })
     },
     Getlike(obj){
@@ -132,7 +127,7 @@ export default {
     },
     Setlike(obj){
       Setlike(obj).then(res=>{
-        console.log("设置开始")
+        // console.log("设置开始")
        if(this.like!=0){
          console.log("设置结束1")
          this.$message({
@@ -140,7 +135,7 @@ export default {
            type: 'warning'
          });
        }else{
-         console.log("设置结束2")
+         // console.log("设置结束2")
          this.$message({
            message: '点赞成功',
            type: 'success'
@@ -174,19 +169,24 @@ export default {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop//获取滚动距离
       this.scrollTop = scrollTop//data里return了一个全局的scrollTop
       let footerTop=this.$refs.my_footer.$el.offsetTop-(window.innerHeight-130)
-      // console.log(footerTop)
-      // console.log("scrollTop"+this.scrollTop)
+
       if(this.scrollTop>348&&this.scrollTop<footerTop){
         if(this.isFlag){
           this.scrollTop=false;
           this.isShowBackTop=true;
-          document.querySelector('.right0').classList.add('active20210620')
+          this.$nextTick(()=>{
+            this.$refs.right0.classList.add('active20210620')
+          })
         }
 
       } else if(this.scrollTop<348||this.scrollTop>=footerTop) {
         this.isShowBackTop=false;
-        document.querySelector('.right0').classList.remove('active20210620')
-        // document.querySelector('.right0').classList.add('active20210621')
+        this.$nextTick(()=>{
+          let ele= this.$refs.right0;
+          if(ele.classList.contains('active20210620')){
+            ele.classList.remove('active20210620')
+          }
+        })
 
       }
 

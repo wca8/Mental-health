@@ -1,6 +1,8 @@
 import {request} from "./request";
+import qs from "qs";
 
 export function GetPay(obj){
+    console.log(obj)
     return  request({
         url:'/pay/wx/qrcode',
         method: 'post',
@@ -20,3 +22,23 @@ export function GetPayStatus(obj){
         }
     })
 }
+
+
+export function SetCreateOrder(obj){
+    return  request({
+        url:'/order/create',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        data:qs.stringify( {
+            ...obj
+        })
+    })
+}
+
+
+
+
+
+

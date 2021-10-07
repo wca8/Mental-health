@@ -4,7 +4,7 @@
       <el-tabs v-model="activeName" >
 
         <el-tab-pane   label="基本信息" name="first">
-            <user-info @Refresh_="Refresh_" :user-info_="userInfo"></user-info>
+            <user-info :ext="ext" @Refresh_="Refresh_" :user-info_="userInfo"></user-info>
         </el-tab-pane>
 
         <el-tab-pane label="修改头像" name="second">
@@ -15,7 +15,9 @@
           <password></password>
         </el-tab-pane>
 
-        <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+        <el-tab-pane label="其他" name="fourth">
+
+        </el-tab-pane>
       </el-tabs>
 
 
@@ -30,6 +32,7 @@ import {GetUserInfo} from "../../../network/login";
 import UserInfo from "./child/UserInfo";
 import Avatar from "./child/Avatar";
 import Password from "./child/Password";
+
 export default {
   name: "ControlCenter",
   created() {
@@ -41,14 +44,14 @@ export default {
     return {
       activeName: 'first',
       userInfo:{},
-    };
+      ext:{},
+      };
   },
   components:{
     MyFooter,
     UserInfo,
     Avatar,
     Password,
-
   },
   methods:{
     handleClick(tab, event) {
@@ -57,6 +60,7 @@ export default {
     GetUserInfo(token){
       GetUserInfo(token).then(res=>{
         this.userInfo=res.data.base;
+        this.ext=res.data.ext;
         console.log(this.userInfo)
         console.log(res)
       })

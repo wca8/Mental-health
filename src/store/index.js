@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import advisoryModule from "./modules/advisory";
+import read from "./modules/read";
+import questions from "./modules/questions";
+import user from "./modules/user";
 
 Vue.use(Vuex)
 
@@ -9,6 +13,7 @@ export default new Vuex.Store({
     isPay:false,
     obj:'',
     isSetClass:false,
+    userFlag:false,
   },
   mutations: {
     changeToken(state){
@@ -19,13 +24,9 @@ export default new Vuex.Store({
     },
     SetPay(state){
       state.isPay=true;
-      // console.log(state.isPay)
-
     },
     SetPay2(state){
       state.isPay=false;
-      // console.log(state.isPay)
-
     },
     SetPayInfo(state,payload){
       state.obj='';
@@ -36,10 +37,18 @@ export default new Vuex.Store({
     },
     removeClass(state){
       state.isSetClass=false
+    },
+    setUserFlag(state){
+      state.userFlag=!state.userFlag
     }
+
   },
   actions: {
   },
   modules: {
+    advisoryModule,
+    read,
+    questions,
+    user,
   }
 })

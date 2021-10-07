@@ -15,7 +15,7 @@
         <div
             v-for="(item,index) in moneyList"
             @click="moneyListClick(index)"
-            :class="{active_20210616:index==current}">{{item.val}}</div>
+            :class="{active_20210616:index==current&&inputChange}">{{item.val}}</div>
       </div>
       <div class="input-content">
         <el-input
@@ -24,14 +24,13 @@
             maxLength='5'
             placeholder="或输入其他金额 1-10000元"
             v-model.number="input"
+            @blur="inputBlur"
+            @focus="inputFocus"
             clearable>
         </el-input>
       </div>
       <div class="payment-method">
-        <div
-            v-for="(item,index) in goPayList"
-            @click="goPayClick(index)"
-            :class="{active_20210616:index==current2}">{{item.name}}</div>
+        <div><i class="el-icon-circle-check"></i>微信支付</div>
       </div>
 
       <el-button @click="PayClick" class="go-pay" type="success">去支付</el-button>
@@ -44,12 +43,13 @@
 
 <script>
 import {randomRange} from "../../../../common/utils";
+import {GetTokenStatus} from "../../../../network/user";
 
 export default {
   name: "Pay",
   data(){
     return{
-      input:null,
+      input:'',
       current:null,
       current2:null,
       moneyList:[
@@ -74,17 +74,53 @@ export default {
         {
           id:1,
           name:'微信支付'
-        },{
-          id:2,
-          name:'支付宝'
         }
       ],
-      moneynum:null,
+      moneynum:'',
       pay_method:null,
+      inputChange:true,
     }
   },
 
   methods:{
+    inputBlur(){
+      if(this.input.length==0){
+        this.inputChange=true;
+      }
+    },
+    inputFocus(){
+      this.inputChange=false;
+    },
+    GetTokenStatus(token){
+      GetTokenStatus(token).then(res=>{
+        if(res.msg=='当前登录token无效，请重新登录'){
+          let routeData = this.$router.resolve({ path: '/login', query: {  } });
+          window.open(routeData.href, '_blank');
+        }else{
+          let flag=String(this.moneynum).trim().length>0||String(this.input).trim().length>0;
+          console.log(flag)
+           if(flag){
+             let money;
+             if(!this.inputChange){
+               money=this.input;
+             }else{
+               money=this.moneynum;
+             }
+
+             let obj={
+               money,
+               payName:"心理栈官方打赏",
+               remark:"爱心打赏",
+               token:localStorage.getItem('elementToken')
+             }
+             console.log(obj)
+             this.$store.commit('SetPayInfo',obj)
+             let random = randomRange(5,22);
+             this.$router.push('/pay/'+ random)
+           }
+        }
+      })
+    },
     shutDownClick(){
       this.$emit('shutDownClick')
     },
@@ -99,23 +135,8 @@ export default {
       console.log("选择"+this.pay_method)
     },
     PayClick(){
-      let flag=this.moneynum!=null&&this.pay_method!=null||this.input!=null
-      &&this.pay_method!=null;
-      if(flag){
-        let obj={
-          money:this.moneynum||this.input,
-          payName:"心理栈官方打赏",
-          remark:"爱心打赏",
-          token:localStorage.getItem('elementToken')
-        }
-        console.log(obj)
-        this.$store.commit('SetPayInfo',obj)
-        let random = randomRange(5,22);
-        this.$router.push('/pay/'+ random)
-
-      }else {
-        console.log("错误")
-      }
+      let token=localStorage.getItem('elementToken');
+      this.GetTokenStatus(token);
     }
   }
 }
@@ -203,14 +224,19 @@ h4{
   margin-top: 25px;
   display: flex;
   justify-content: space-between;
+
 }
+
 .payment-method>div{
   width: 135px;
   text-align: center;
-  line-height: 40px;
+  line-height: 35px;
   border: 1px solid rgb(74,179,68);
   border-radius: 10px;
   cursor: pointer;
+  background-color:rgb(133,206,97) ;
+  color: white;
+  font-size: 14px;
 }
 .go-pay{
   width: 100%;

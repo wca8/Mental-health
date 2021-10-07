@@ -40,10 +40,7 @@ export default {
   methods:{
     GetFav(obj){
       GetFav(obj).then(res=>{
-        console.log(res)
-        console.log("获取到收藏数据")
         this.articleList=res.data
-
       })
     },
     Refresh(){

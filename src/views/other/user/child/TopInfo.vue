@@ -1,8 +1,8 @@
 <template>
   <div class="top-info">
     <div class="left">
-      <img src="https://dcdn.it120.cc/2021/06/13/fead149b-8be7-41f5-8f03-a098a0cfa46c.jpg" alt="">
-
+      <div v-if="userInfo.avatarUrl"><img  :src="userInfo.avatarUrl" alt=""></div>
+      <div v-else><img src="https://dcdn.it120.cc/2021/06/13/fead149b-8be7-41f5-8f03-a098a0cfa46c.jpg" alt=""></div>
     </div>
     <div class="right">
       <div class="top">
@@ -10,11 +10,11 @@
       </div>
       <div class="bottom">
           <div>
-            <div>1</div>
-            <div>2</div>
             <div>0</div>
-            <div>1</div>
-            <div>2</div>
+            <div>0</div>
+            <div>0</div>
+            <div>0</div>
+            <div>0</div>
           </div>
           <div>
           <div>关注</div>

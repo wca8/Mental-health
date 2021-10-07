@@ -37,9 +37,9 @@ export default {
   border-bottom: 1px solid #ddd;
 }
 .main-tab-bar{
-  width:60%;
+  width:55%;
   position: relative;
-  left: -2%;
+  left: -1%;
 
 }
 .top-nav-bar>div{
@@ -52,7 +52,7 @@ export default {
   height: 100%;
 }
 .logo{
-  width: 7.5%;
+  width: 12.5%;
 }
 .search{
   width: 20%;

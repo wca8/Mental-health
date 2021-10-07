@@ -31,7 +31,10 @@
 <script>
 import {GetMailBoxLogin} from "../../../../network/login";
 import { Message } from 'element-ui';
-import {INCREMENT} from "../../../../../../../15vuex/learnvuex/src/store/mutations-types";
+import {GetUserInfo} from "../../../../network/user";
+import {mapMutations} from "vuex";
+
+
 export default {
   name: "Mailbox",
   data(){
@@ -59,24 +62,15 @@ export default {
 
         password:[
           { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            validator: function(rule, value, callback) {
-              if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,18}$/.test(value) == false) {
-                callback(new Error("密码须包含数字、字母两种元素，且密码位数为6-16位"));
-              } else {
-                //校验通过
-                callback();
-              }
-            },
-          }
+
         ]
 
       }
     }
   },
   methods:{
+    ...mapMutations("user", ["SetUserInfoChange"]),
     open4() {
-      console.log(1)
       Message.error('错了哦，这是一条错误消息');
     },
     changeToken() {
@@ -84,8 +78,6 @@ export default {
     },
     GetMailBoxLogin(obj){
       GetMailBoxLogin(obj).then(res=>{
-        console.log(res)
-
         if(res.code==0){
           this.$message({
             message: '恭喜您，登录成功！',
@@ -93,6 +85,7 @@ export default {
           });
           this.changeToken();
           localStorage.setItem("elementToken", res.data.token);
+          // this.SetUserInfoChange();
           this.$router.replace('/user');
 
         }else{

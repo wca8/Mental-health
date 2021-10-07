@@ -1,15 +1,34 @@
 <template>
   <div class="search">
     <form class="form" action="">
-      <input placeholder="爱生活，爱自己" type="text">
-      <div></div>
+      <input maxlength="20" v-model="input" placeholder="爱生活，爱自己" type="text">
+      <div @click="searchClick"></div>
     </form>
   </div>
 </template>
 
 <script>
+import {isEmpty} from "../../../common/utils";
+
 export default {
-name: "Search"
+  name: "Search",
+  data(){
+    return{
+      input:''
+    }
+  },
+  methods:{
+    searchClick(){
+      let val=isEmpty(this.input);
+      if(val==true){
+        this.$message.error('搜索内容不得为空！');
+      }else{
+        let routeData = this.$router.resolve({ path: '/Search', query: { val:this.input } });
+        window.open(routeData.href, '_blank');
+      }
+
+    }
+  }
 }
 </script>
 

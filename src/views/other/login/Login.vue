@@ -13,20 +13,25 @@
           <router-view/>
         </keep-alive>
         <div class="registered">
-          <div><router-link tag="div"  to="/registered">注册</router-link></div>
-<!--          <div><router-link tag="div"  to="/login">找回密码</router-link></div>-->
+
+          <div><router-link tag="div"  to="/registered">邮箱注册</router-link></div>
+          <div><router-link tag="div"  to="/NameRegistered">用户名注册</router-link></div>
+          <div><router-link tag="div"  to="/RetrievePassword">找回密码</router-link></div>
         </div>
       </div>
     </div>
+    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
 import Logo from "../../../components/content/logo/Logo";
+import MyFooter from "../../../components/content/footer2/MyFooter";
 export default {
   name: "Login",
   components:{
-    Logo
+    Logo,
+    MyFooter
   },
   methods:{
 
@@ -45,8 +50,7 @@ export default {
 .main{
   width: 350px;
   margin: 0px auto;
-  height: 500px;
-
+  min-height: 560px;
 }
 .main-btn{
   background-color: #fff;
@@ -84,5 +88,6 @@ export default {
   font-size: 14px;
   text-align: right;
   cursor: pointer;
+  color: #555454;
 }
 </style>

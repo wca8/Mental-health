@@ -126,6 +126,5 @@ img{
 <style>
 .determine-06151541{
   background-color: rgb(74,179,68)!important;
-
 }
 </style>

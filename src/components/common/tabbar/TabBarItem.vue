@@ -1,9 +1,6 @@
 <template>
   <div @click="itemClick" class="tab-bar-item">
-<!--    <div v-if="!isActive"><slot name="item-icon"></slot></div>-->
-<!--    <div v-else><slot name="item-icon-active"></slot></div>-->
     <div class="item" :style="activeStyle"><slot  name="item-text"></slot></div>
-
   </div>
 </template>
 
@@ -41,7 +38,7 @@ export default {
   display: flex;
   justify-content: center;
   cursor: pointer;
-  padding: 6px 0px;
+  padding: 2px 0px;
   border-right: 1px dashed #ccc
 }
 

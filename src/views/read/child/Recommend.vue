@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import {GetTokenStatus} from "../../../network/user";
+
 export default {
     name: "Recommend",
     data(){
@@ -30,9 +32,20 @@ export default {
     },
 
     methods:{
+      GetTokenStatus(token){
+        GetTokenStatus(token).then(res=>{
+          if(res.msg=='当前登录token无效，请重新登录'){
+            let routeData = this.$router.resolve({ path: '/login', query: {  } });
+            window.open(routeData.href, '_blank');
+          }else{
+            let routeData = this.$router.resolve({ path: '/PostAnArticle', query: {  } });
+            window.open(routeData.href, '_blank');
+          }
+        })
+      },
       postArticleClick(){
-        let routeData = this.$router.resolve({ path: '/PostAnArticle', query: {  } });
-        window.open(routeData.href, '_blank');
+        let token=localStorage.getItem('elementToken')
+        this.GetTokenStatus(token)
       }
 
 

@@ -1,39 +1,49 @@
 <template>
   <div class="talk">
-    <article0 :info="info"></article0>
-   </div>
+<!--      <error></error>-->
+    {{num_}}
+  </div>
 
 </template>
 
 <script>
-
-import article0 from "./child/article0";
-import {GetUserInfo} from "../../network/login";
-
+import Error from "../../components/common/error/Error";
+import axios from 'axios'
 export default {
   name: "Talk",
   data() {
     return {
-      info:{},
+        num:0
+      };
 
-    };
+  },
+  computed:{
+    num_(){
+      return this.num.toFixed(2)
+    }
+  },
+  methods:{
+
   },
   created() {
-    let t=localStorage.getItem('elementToken');
-    this.GetUserInfo(t)
+      axios({
+        url:'http://152.136.185.210:4000/login',
+        data:{
+          name:'coderwhy',
+          password:'1234506',
+        },
+        method:'post'
+      }).then(res=>{
+        console.log(res)
+      }).catch(err=>{
+        // console.log([err])
+        console.dir(err)
+      })
   },
   components:{
-    article0
+    Error
   },
-  methods: {
-    GetUserInfo(t){
-      GetUserInfo(t).then(res=>{
-        console.log(res)
-        this.info=res.data.base
-        console.log(this.info)
-      })
-    }
-  }
+
 }
 
 

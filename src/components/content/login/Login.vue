@@ -1,7 +1,8 @@
 <template>
   <div  class="login" >
     <div  class="userInfo" v-if="$store.state.isToken">
-      <img @click="userInfoClick" src="https://dcdn.it120.cc/2021/06/13/fead149b-8be7-41f5-8f03-a098a0cfa46c.jpg" alt="">
+      <div v-if="userInfo.avatarUrl"><img @click="userInfoClick" :src="userInfo.avatarUrl" alt=""></div>
+      <div v-else><img @click="userInfoClick" src="https://dcdn.it120.cc/2021/06/13/fead149b-8be7-41f5-8f03-a098a0cfa46c.jpg" alt=""></div>
       <el-dropdown >
       <span  class="el-dropdown-link ">
          <i class="el-icon-arrow-down el-icon--right"></i>
@@ -20,26 +21,72 @@
 <script>
 import {GetUserInfo} from "../../../network/login";
 import {SetLoginOut} from "../../../network/login";
+import {GetTokenStatus} from "../../../network/user";
+import {mapActions,mapState} from "vuex";
+
 
 export default {
   name: "Login",
   data(){
     return{
-      token:[],
+      token:'',
+      userInfo:{}
     }
 
   },
-  created() {
-
-    if(localStorage.getItem('elementToken')){
-
-      this.changeToken()
+  computed:{
+    ...mapState("user", ["userInfoChange"]),
+    user(){
+      return this.$store.state.userFlag;
     }
+  },
+  watch:{
+    userInfoChange(){
+      this.GetUserInfo(this.token)
+    },
+    user(){
+      if(this.token.trim().length>0){
+        this.GetUserInfo(this.token)
+      }
+    }
+  },
+  created() {
+    this.token=localStorage.getItem('elementToken')||''
+    if(this.token.trim().length>0){
+      this.changeToken()
+      this.GetUserInfo(localStorage.getItem('elementToken'))
+    }
+
+
 
   },
   methods:{
+    ...mapActions("advisoryModule", ["A_SetOrderList"]),
+    GetTokenStatus(token){
+      GetTokenStatus(token).then(res=>{
+        if(res.msg=='当前登录token无效，请重新登录'){
+          let routeData = this.$router.resolve({ path: '/login', query: {  } });
+          window.open(routeData.href, '_blank');
+        }else{
+          //更新vuex中待咨询数据
+          this.A_SetOrderList({num:1})
+
+          this.GetUserInfo(token)
+          this.$router.push('/user')
+
+        }
+      })
+    },
     ControlCenterClick(){
-      this.$router.push('/ControlCenter')
+      GetTokenStatus(this.token).then(res=>{
+        if(res.msg=='当前登录token无效，请重新登录'){
+          let routeData = this.$router.resolve({ path: '/login', query: {  } });
+          window.open(routeData.href, '_blank');
+        }else{
+          this.$router.push('/ControlCenter')
+        }
+      })
+
     },
     changeToken() {
       this.$store.commit('changeToken')
@@ -51,14 +98,13 @@ export default {
       this.$router.push('/login')
     },
     userInfoClick(){
-      // console.log("用户信息")
-      let token=localStorage.getItem('elementToken')
-      this.GetUserInfo(token)
-      this.$router.push('/user')
+      this.GetTokenStatus(this.token)
+
     },
     GetUserInfo(token){
       GetUserInfo(token).then(res=>{
-        // console.log(res)
+        this.userInfo=res.data.base;
+
       })
     },
     SetLoginOut(token){
@@ -67,7 +113,7 @@ export default {
       })
     },
     signOut(){
-      console.log("diank")
+
       this.$confirm('您确定要退出登录?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -82,6 +128,7 @@ export default {
           type: 'success',
           message: '退出登录成功!'
         });
+        this.$router.push('/home')
       }).catch(() => {
         this.$message({
           type: 'info',

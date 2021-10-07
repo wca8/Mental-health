@@ -77,7 +77,7 @@ export default {
 
 
 .item{
-  padding: 20px;
+  padding: 40px;
   box-sizing: border-box;
   background-color: #fff;
   margin-top: 20px;

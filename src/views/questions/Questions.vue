@@ -9,7 +9,9 @@
 <script>
 import MainBox from "./child/MainBox";
 import MyFooter from "../../components/content/footer/MyFooter";
-import BackTop from "../../components/content/backTop/BackTop";
+import BackTop from "../../components/content/backTop/BackTop"
+
+
 export default {
   name: "Questions",
   components:{
@@ -20,6 +22,7 @@ export default {
   created() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   },
+
   methods:{
     backClick(){
       document.body.scrollTop = document.documentElement.scrollTop = 0;

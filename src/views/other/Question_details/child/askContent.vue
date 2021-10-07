@@ -85,6 +85,7 @@ import {Getlike} from "../../../../network/article";
 import {SetComment} from "../../../../network/article";
 import {GetComment} from "../../../../network/article";
 import UserAnswer from "./UserAnswer";
+import {GetTokenStatus} from "../../../../network/user";
 
 export default {
   name: "askContent",
@@ -116,12 +117,28 @@ export default {
     UserAnswer
   },
   methods:{
+    GetTokenStatus(token){
+      GetTokenStatus(token).then(res=>{
+        if(res.msg=='当前登录token无效，请重新登录'){
+          let routeData = this.$router.resolve({ path: '/login', query: {  } });
+          window.open(routeData.href, '_blank');
+        }else{
+          let obj={
+            content:this.textarea,
+            type:3,
+            token:localStorage.getItem('elementToken'),
+            refId:this.articleId
+          }
+          this.SetComment(obj)
+        }
+      })
+    },
     GetarticleContent(id){
       GetarticleContent(id).then(res=>{
-        console.log(res)
        this.item=res.data.info;
-       this.keywords=res.data.info.keywords
+       this.keywords=res.data.info.keywords;
        this.keywords_=this.keywords.split(",");
+       document.title=this.item.title||'';
       })
     },
     Setlike(obj){
@@ -191,23 +208,22 @@ export default {
             type:3,
           }
           this.GetComment(obj)
+        }else if(res.code==10000){
+          this.$message({
+            message: '提交内容不能超过1000字！',
+            type: 'warning'
+          });
         }
       })
     },
     GetComment(obj){
       GetComment(obj).then(res=>{
         this.askList=res.data;
-        console.log(res)
       })
     },
     SubmitAnswerClick(){
-      let obj={
-        content:this.textarea,
-        type:3,
-        token:localStorage.getItem('elementToken'),
-        refId:this.articleId
-      }
-      this.SetComment(obj)
+      let token=localStorage.getItem('elementToken');
+      this.GetTokenStatus(token);
     }
 
   }

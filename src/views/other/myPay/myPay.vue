@@ -51,7 +51,8 @@ export default {
     return{
       qrcodeAddress: "",
       outTradeId:'',
-      prepayId:''
+      prepayId:'',
+      time:null
     }
   },
   created() {
@@ -61,6 +62,9 @@ export default {
   },
   mounted() {
 
+  },
+  beforeDestroy(){
+    clearInterval(this.time);
   },
   methods:{
     setPay(){
@@ -80,25 +84,20 @@ export default {
         this.qrcodeAddress=res.data.codeUrl
         this.prepayId=res.data.prepayId
         this.qrcode()
-        let time;
         let obj={
           outTradeId:this.outTradeId,
           token:localStorage.getItem('elementToken')
         }
-        time= setInterval(()=>{
+          this.time= setInterval(()=>{
           this.GetPayStatus(obj)
-          console.log("我在检测支付中...")
           if(this.$store.state.isPay){
-            clearInterval(time);
-            console.log("已结束检测，支付成功!")
+            clearInterval(this.time);
+            this.time=null;
             this.$router.go(-1);
             this.$message({
               message: '支付成功',
               type: 'success'
             });
-
-
-
           }
 
         },2000)

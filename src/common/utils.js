@@ -1,12 +1,20 @@
 //debounce 防抖动
 export function isEmpty(obj) {
-  if (typeof obj == "undefined" || obj == null || obj == "") {
+  if (typeof obj == "undefined" || obj == null || obj.trim() == "") {
     return true;
   }else{
     return  false
   }
 }
 
+
+export function isEmpty_(obj) {
+  if (typeof obj == "undefined" || obj == null || obj == "") {
+    return true;
+  }else{
+    return  false
+  }
+}
 
 export function debounce(func, delay=50) {
   let timer = null;

@@ -23,12 +23,19 @@
         <el-button class="btn" type="success" @click="submitForm('ruleForm')">立即登录</el-button>
       </el-form-item>
     </el-form>
+
   </div>
 </template>
 
 <script>
+import {GetUserNameLogin} from "../../../../network/login";
+
+
 export default {
   name: "Username",
+  components:{
+
+  },
   data(){
     return{
       ruleForm: {
@@ -41,8 +48,8 @@ export default {
           { required: true, message: "请输入用户名", trigger: "blur" },
           {
             validator: function(rule, value, callback) {
-              if (/^[A-Za-z0-9-_\u4e00-\u9fa5]{3,20}$/.test(value) == false) {
-                callback(new Error("请输入中英文，数字等组成的用户名（3到20个字符）"));
+              if (/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){3,16}$/.test(value) == false) {
+                callback(new Error("输入用户名，3-20个以字母开头、可带数字、“_”、“.”的字串"));
               } else {
                 //校验通过
                 callback();
@@ -70,10 +77,35 @@ export default {
     }
   },
   methods:{
+    changeToken() {
+      this.$store.commit('changeToken')
+    },
+    GetUserNameLogin(obj){
+      GetUserNameLogin(obj).then(res=>{
+        console.log(res)
+        if(res.msg=='success'){
+          localStorage.setItem("elementToken", res.data.token);
+          this.changeToken();
+          this.$router.replace('/user');
+          this.$message({
+            message: '登录成功！',
+            type: 'success'
+          });
+        }else{
+          this.$message.error('账号或密码输入错误，请重新输入!');
+        }
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          let obj={
+            deviceId:'302532',
+            deviceName:'Realme X',
+            pwd:this.ruleForm.password,
+            username:this.ruleForm.username,
+          }
+          this.GetUserNameLogin(obj)
         } else {
           console.log('error submit!!');
           return false;
@@ -90,6 +122,7 @@ export default {
 <style scoped>
 .login-username{
   padding: 30px;
+  padding-bottom: 0px
 }
 .username{
   margin-top: 8px;

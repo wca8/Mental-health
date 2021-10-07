@@ -4,7 +4,9 @@
         class="swiper"
         ref="mySwiper" v-if="bannerList.length>0" :options="swiperOptions">
       <swiper-slide v-for="item in bannerList" >
-        <img :src="item.picUrl" alt="">
+        <a  target="_blank" :href="item.linkUrl">
+       		<img :src="item.picUrl" alt="">
+         </a>
       </swiper-slide>
 
 

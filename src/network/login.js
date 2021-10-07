@@ -21,9 +21,33 @@ export function GetRegistered(obj){
 }
 
 
+
+export function GetUsernameRegistered(obj){
+    return  request({
+        url:'/user/username/register',
+        method: 'post',
+        params:{
+            ...obj
+        }
+    })
+}
+
+
 export function GetMailBoxLogin(obj){
     return  request({
         url:'/user/email/login',
+        method: 'post',
+        params:{
+            ...obj
+        }
+    })
+}
+
+
+
+export function GetUserNameLogin(obj){
+    return  request({
+        url:'/user/username/login',
         method: 'post',
         params:{
             ...obj

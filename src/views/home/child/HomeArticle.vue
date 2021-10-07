@@ -51,7 +51,6 @@ export default {
   },
   methods:{
     articleClick(id,categoryId){
-      // this.id=id
       let routeData = this.$router.resolve({ path: '/content', query: {  id,categoryId } });
       window.open(routeData.href, '_blank');
     }

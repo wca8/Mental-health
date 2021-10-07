@@ -18,26 +18,25 @@ export default {
     return{
       titleList:[],
       currentIndex:0,
-
+      id:49510,
     }
   },
   created() {
     this.GetSortTitles0();
-
+    if(this.$route.query.index){
+      let index=this.$route.query.index
+      this.currentIndex=Number(index)
+    }
   },
   methods:{
-
     GetSortTitles0(){
       GetSortTitles0().then(res=>{
         this.titleList=res.data;
-        console.log(res)
       })
     },
     itemClick(index,id){
-      this.currentIndex=index
-      console.log(index,id)
-      this.$emit('itemClick',index,id)
-
+      this.currentIndex=index;
+      this.$emit('itemClick',index,id);
     }
   }
 }

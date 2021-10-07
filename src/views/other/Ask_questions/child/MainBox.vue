@@ -85,8 +85,9 @@ import recommend from "../../../questions/child/recommend";
 import {PostAskQuestion} from "../../../../network/ask";
 import {GetKey} from "../../../../network/article";
 import {GetUserInfo} from "../../../../network/login";
-import {isEmpty} from "../../../../common/utils";
+import {isEmpty_} from "../../../../common/utils";
 import {GetarticleList} from "../../../../network/article";
+import {GetTokenStatus} from "../../../../network/user";
 
 export default {
   name: "MainBox",
@@ -123,16 +124,15 @@ export default {
       console.log(this.checkboxGroup1)
     },
     inputChange(){
-      let a=isEmpty(this.title);
-      let b=isEmpty(this.textarea);
-      let c=isEmpty(this.categoryId);
-      let d=isEmpty(this.checkboxGroup1);
+      let a=isEmpty_(this.title);
+      let b=isEmpty_(this.textarea);
+      let c=isEmpty_(this.categoryId);
+      let d=isEmpty_(this.checkboxGroup1);
       if(a!=true&&b!=true&&c!=true&&d!=true){
         this.isFlag=false
       }else {
         this.isFlag=true
       }
-      console.log("技术")
 
     }
   },
@@ -153,7 +153,32 @@ export default {
 
   },
   methods:{
-
+    GetTokenStatus(token){
+      GetTokenStatus(token).then(res=>{
+        if(res.msg=='当前登录token无效，请重新登录'){
+          let routeData = this.$router.resolve({ path: '/login', query: {  } });
+          window.open(routeData.href, '_blank');
+        }else{
+          this.GetKey();
+          let headers={
+            'X-Token':this.adminToken,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+          let obj={
+            categoryId:this.categoryId,
+            keywords:this.checkboxGroup1.toString(),
+            title:this.title,
+            content:this.textarea,
+            token:localStorage.getItem('changan'),
+            status:2,
+            author:this.isAnonymous?"匿名提问":this.nick,
+            //作为唯一依据
+            tags:this.userId
+          }
+          this.PostAskQuestion(headers,obj)
+        }
+      })
+    },
     GetKey(){
       GetKey().then(res=>{
         this.adminToken=res.data;
@@ -196,7 +221,14 @@ export default {
           });
 
           setTimeout(()=>{
-            this.$router.push('/questions')
+           let index=this.options.findIndex(item=> item.value==this.categoryId)
+            console.log(typeof  index)
+            this.$router.push({
+              path:'/questions',
+              query:{
+                index
+              }
+            })
           },1000)
 
         }else{
@@ -205,25 +237,8 @@ export default {
       })
     },
     postAskClick(){
-      this.GetKey();
-      let headers={
-        'X-Token':this.adminToken,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-      let obj={
-        categoryId:this.categoryId,
-        keywords:this.checkboxGroup1.toString(),
-        title:this.title,
-        content:this.textarea,
-        token:localStorage.getItem('changan'),
-        status:2,
-        author:this.isAnonymous?"匿名提问":this.nick,
-        //作为唯一依据
-        tags:this.userId
-      }
-
-      this.PostAskQuestion(headers,obj)
-
+      let token=localStorage.getItem('elementToken')
+      this.GetTokenStatus(token)
     },
 
 
@@ -276,15 +291,17 @@ export default {
 .tags-title{
   display: flex;
   margin: 20px 0;
+  flex-wrap: wrap;
 }
 .tags-title >div,.tags-val>div{
-  width: 70px;
+  width: 80px;
   background-color: rgba(243,244,245);
   line-height: 40px;
   margin-right: 20px;
   text-align: center;
   cursor: pointer;
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 .active06251935{
   background-color: rgba(103,194,58,1)!important;

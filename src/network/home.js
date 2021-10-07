@@ -60,4 +60,17 @@ export function GetSortTitles0(shopId=30239){
 
 
 
+export function GetSearchArticle(obj){
+    return  request({
+        url:'/cms/news/list',
+        method: 'post',
+        params:{
+            ...obj
+        }
+    })
+}
+
+
+
+
 

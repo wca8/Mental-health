@@ -32,9 +32,7 @@ export default {
   methods:{
     GetarticleList(categoryId,page,pageSize){
       GetarticleList(categoryId,page,pageSize).then(res=>{
-        console.log(res)
         this.askList=res.data;
-
       })
     },
     itemClick(id,categoryId){

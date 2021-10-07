@@ -25,19 +25,26 @@ export default {
   },
   methods:{
     addClick(){
+
       let obj={
         newsId:this.articleId,
         token:localStorage.getItem('elementToken')
       }
       this.SetFav(obj)
-      this.$message({
-        message: '收藏成功！',
-        type: 'success'
-      });
+
     },
     SetFav(obj){
       SetFav(obj).then(res=>{
         console.log(res)
+        if(res.msg=='当前登录token无效，请重新登录'){
+           let routeData = this.$router.resolve({ path: '/login', query: {  } });
+           window.open(routeData.href, '_blank');
+        }else{
+          this.$message({
+            message: '收藏成功！',
+            type: 'success'
+          });
+        }
       })
     },
     rewardClick(){

@@ -36,7 +36,7 @@ export default {
     }
   },
   created() {
-    console.log(this.commentList)
+    // console.log(this.commentList)
   },
   props:{
     commentList:{

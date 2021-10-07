@@ -9,7 +9,6 @@
         <div class="top">
           <el-button @click="goAskClick" icon="el-icon-edit" type="success">我要提问</el-button>
           <el-button icon="el-icon-edit-outline" type="success">我要回答</el-button>
-
         </div>
       </div>
 

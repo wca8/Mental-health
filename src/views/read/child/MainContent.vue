@@ -1,6 +1,7 @@
 <template>
   <div class="main-content">
       <div class="main">
+
         <div class="left0">
             <tab-control
                 class="tab-control"
@@ -29,6 +30,7 @@ import {GetSortTitles} from "../../../network/home";
 import {GetarticleList} from "../../../network/home";
 import ReadArticle from "./ReadArticle";
 import Recommend from "./Recommend";
+import {mapState} from 'vuex'
 
 export default {
     name: "MainContent",
@@ -36,28 +38,28 @@ export default {
       return{
         sortTitles:[],
         articleList: {
-          'new':{page:0,list:[]},
-          'Popular_science':{page:0,list:[]},
-          'emotion':{page:0,list:[]},
-          'family':{page:0,list:[]},
-          'Social':{page:0,list:[]},
-          'Perceive':{page:0,list:[]},
-          'user':{page:0,list:[]},
+          45991:{page:0,list:[]},
+          45832:{page:0,list:[]},
+          45833:{page:0,list:[]},
+          45834:{page:0,list:[]},
+          45835:{page:0,list:[]},
+          45836:{page:0,list:[]},
+          49289:{page:0,list:[]},
         },
-        currentType:'new',
         categoryId:45991,
         pageSize:8,
       }
     },
     created() {
       this.GetSortTitles()
-      this.GetArticleList(45832,'Popular_science');
-      this.GetArticleList(45833,'emotion');
-      this.GetArticleList(45834,'family');
-      this.GetArticleList(45835,'Social');
-      this.GetArticleList(45836,'Perceive');
-      this.GetArticleList(49289,'user');
-      this.GetArticleList(45991,'new');
+
+      this.GetArticleList(45833);
+      this.GetArticleList(45834);
+      this.GetArticleList(45835);
+      this.GetArticleList(45836);
+      this.GetArticleList(49289);
+      this.GetArticleList(45991);
+      this.GetArticleList(45832);
     },
     components:{
       TabControl,
@@ -65,34 +67,27 @@ export default {
       Recommend,
     },
     computed:{
+
       showArticleList(){
-        return this.articleList[this.currentType].list
-      }
+        return this.articleList[this.categoryId].list
+      },
+
     },
     methods:{
+      test(){
+
+      },
       GetSortTitles(){
         GetSortTitles().then(res=>{
-          console.log(res)
           this.sortTitles=res.data;
         })
       },
-      GetArticleList(categoryId,type){
-        let page=this.articleList[type].page+1;
-        console.log("当前页码"+page)
+      GetArticleList(categoryId){
+        let page=this.articleList[this.categoryId].page+1;
         GetarticleList(categoryId,page).then(res=>{
-          switch (categoryId){
-            case 45991:this.currentType='new';break;
-            case 45832:this.currentType='Popular_science';break;
-            case 45833:this.currentType='emotion';break;
-            case 45834:this.currentType='family';break;
-            case 45835:this.currentType='Social';break;
-            case 45836:this.currentType='Perceive';break;
-            case 49289:this.currentType='user';break;
-          }
-          console.log(res)
           if(res.data){
-            this.articleList[this.currentType].list.push(...res.data);
-            this.articleList[this.currentType].page+=1;
+            this.articleList[categoryId].list.push(...res.data);
+            this.articleList[categoryId].page+=1;
           }else{
             this.$message({
               message: '已经到底了呦！',
@@ -104,24 +99,11 @@ export default {
       },
       //  业务代码
       sortTitlesClick(index){
-        switch (index){
-          case 0:this.currentType='new';break;
-          case 1:this.currentType='Popular_science';break;
-          case 2:this.currentType='emotion';break;
-          case 3:this.currentType='family';break;
-          case 4:this.currentType='Social';break;
-          case 5:this.currentType='Perceive';break;
-          case 6:this.currentType='user';break;
-        }
-        // console.log(this.currentType)
         //根据索引 获取当前文章的id
         this.categoryId=this.sortTitles[index].id
-        // this.GetArticleList(id,this.currentType);
-
-
       },
       moreClick(){
-        this.GetArticleList(this.categoryId,this.currentType)
+        this.GetArticleList(this.categoryId)
       }
     }
 }

@@ -9,14 +9,14 @@
     <tab-bar-item path="/questions">
       <div slot="item-text">问答</div>
     </tab-bar-item>
-    <tab-bar-item path="/test">
-      <div slot="item-text">测试</div>
+    <tab-bar-item path="/advisory">
+      <div slot="item-text">心理咨询</div>
     </tab-bar-item>
     <tab-bar-item path="/course">
       <div slot="item-text">课程</div>
     </tab-bar-item>
-    <tab-bar-item path="/advisory">
-      <div slot="item-text">心理咨询</div>
+    <tab-bar-item path="/test">
+      <div slot="item-text">测试</div>
     </tab-bar-item>
     <tab-bar-item path="/talk">
       <div slot="item-text">倾诉</div>

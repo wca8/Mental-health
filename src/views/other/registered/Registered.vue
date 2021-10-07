@@ -7,24 +7,24 @@
         <h3>爱生活，爱自己</h3>
         <div class="form">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm"   class="demo-ruleForm">
-            <el-form-item  >
+            <el-form-item  prop="email" >
               <el-input
                   prefix-icon="el-icon-user-solid"
                   placeholder="请输入邮箱账号"
-                  v-model="ruleForm.username"
+                  v-model="ruleForm.email"
                   clearable>
               </el-input>
             </el-form-item>
-            <el-form-item  >
+            <el-form-item prop="password" >
               <el-input
                   prefix-icon=" el-icon-menu"
                   class="username"
                   placeholder="请输入密码"
-                  v-model="ruleForm.password1"
+                  v-model="ruleForm.password"
                   show-password>
               </el-input>
             </el-form-item>
-            <el-form-item  >
+            <el-form-item prop="password2" >
               <el-input
                   prefix-icon=" el-icon-menu"
                   class="username"
@@ -33,7 +33,7 @@
                   show-password>
               </el-input>
             </el-form-item>
-            <el-form-item >
+            <el-form-item prop="nickname">
               <el-input
                   prefix-icon=" el-icon-menu"
                   placeholder="请输入昵称"
@@ -42,29 +42,6 @@
               </el-input>
             </el-form-item>
 
-           <div class="city">
-             <span>地址：</span>
-             <el-form-item >
-               <el-select v-model="ruleForm.value" placeholder="请选择">
-                 <el-option
-                     v-for="item in ruleForm.options"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                 </el-option>
-               </el-select>
-             </el-form-item >
-             <el-form-item >
-               <el-select v-model="ruleForm.value" placeholder="请选择">
-                 <el-option
-                     v-for="item in ruleForm.options"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-                 </el-option>
-               </el-select>
-             </el-form-item >
-           </div>
             <el-form-item>
               <span>是否在注册后自动完成登录：</span>
               <el-switch
@@ -82,7 +59,7 @@
                     clearable>
                 </el-input>
               </el-form-item>
-              <el-button class="code_btn2" :disabled="disabled"  @click="codeClick($event)" type="success">获取邮箱验证码</el-button>
+              <el-button class="code_btn2" :disabled="disabled"  @click="codeClick('ruleForm',$event)" type="success">获取邮箱验证码</el-button>
             </div>
             <el-form-item>
               <el-button class="btn"  type="success" @click="submitForm('ruleForm')">立即注册</el-button>
@@ -92,49 +69,35 @@
       </div>
 
     </div>
+    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
 import Logo from "../../../components/content/logo/Logo";
 import {GetCode,GetRegistered} from "../../../network/login";
-
+import MyFooter from "../../../components/content/footer2/MyFooter";
 export default {
   name: "Registered",
   components:{
-    Logo
+    Logo,
+    MyFooter,
   },
   data(){
     return{
       ruleForm: {
-        username: '',
-        password1:'',
+        email: '',
+        password:'',
         password2:'',
         nickname:'',
         province:'',
         city:'',
         code:'',
         switch:false,
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: ''
+
       },
       rules: {
-        username: [
+        email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
           {
             validator: function(rule, value, callback) {
@@ -154,7 +117,7 @@ export default {
           { required: true, message: "请输入密码", trigger: "blur" },
           {
             validator: function(rule, value, callback) {
-              if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,18}$/.test(value) == false) {
+              if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/.test(value) == false) {
                 callback(new Error("密码须包含数字、字母两种元素，且密码位数为6-16位"));
               } else {
                 //校验通过
@@ -162,6 +125,23 @@ export default {
               }
             },
           }
+        ],
+        password2:[
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            validator: function(rule, value, callback) {
+              if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$/.test(value) == false) {
+                callback(new Error("密码须包含数字、字母两种元素，且密码位数为6-16位"));
+              } else {
+                //校验通过
+                callback();
+              }
+            },
+          }
+        ],
+        nickname:[
+          { required: true, message: "请输入昵称", trigger: "blur" },
+          { min: 1, max: 16, message: '长度在 1 到 16 个字符', trigger: 'blur' }
         ]
 
       },
@@ -174,13 +154,19 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let obj={
-            email:this.ruleForm.username,
-            pwd:this.ruleForm.password1,
-            code:this.ruleForm.code,
+          if(this.ruleForm.code.trim()==''){
+            this.$message.error('错误,请输入邮箱验证码!!!');
+            return;
+          }else{
+            let obj={
+              email:this.ruleForm.email,
+              pwd:this.ruleForm.password,
+              code:this.ruleForm.code,
+              nick:this.ruleForm.nickname,
+            }
+            console.log(obj)
+            this.GetRegistered(obj)
           }
-          console.log(obj)
-          this.GetRegistered(obj)
         } else {
           console.log('error submit!!');
           return false;
@@ -193,14 +179,14 @@ export default {
     //邮箱验证码
     GetCode(mail){
       GetCode(mail).then(res=>{
-        // console.log(res)
+        console.log(res)
       })
     },
     //发送注册请求
     GetRegistered(obj){
       GetRegistered(obj).then(res=>{
+        console.log(res)
         if(res.msg=='success'){
-
           this.$message({
             message: '恭喜您：账号注册成功，正在跳转登录页面！',
             type: 'success',
@@ -209,29 +195,49 @@ export default {
           setTimeout(()=>{
             this.$router.replace('/login')
           },3000)
+        }else{
+          this.$message.error('注册失败，请重试');
+
         }
       })
     },
     //获取邮箱验证码
-    codeClick(event){
-      this.GetCode(this.ruleForm.username);
-      this.disabled=true;
-      let el=event.target;
-      let time;
-       time=setInterval(()=>{
-        if(this.time===0){
-          this.time=60;
-          clearInterval(time);
-          this.disabled=false;
-          el.innerHTML="获取邮箱验证码"
-        }else{
-          this.time--;
-          el.innerHTML=this.time+"秒后可重新获取验证码";
+    codeClick(formName,event){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+            if(this.ruleForm.password!=this.ruleForm.password2){
+              this.$message.error('错误,两次密码输入不一致!!!');
+              return;
+            }else{
+
+              this.GetCode(this.ruleForm.email);
+              this.disabled=true;
+              let el=event.target;
+              let time;
+              this.$message({
+                message: '邮箱验证码已发出',
+                type: 'success'
+              });
+               time=setInterval(()=>{
+                if(this.time===0){
+                  this.time=60;
+                  clearInterval(time);
+                  this.disabled=false;
+                  el.innerHTML="获取邮箱验证码"
+                }else{
+                  this.time--;
+                  el.innerHTML=this.time+"秒后可重新获取验证码";
+                }
+
+              },1000)
+
+            }
+        } else {
+          console.log('error submit!!');
+          return false;
         }
+      });
 
-      },1000)
-
-      this.$toast.show(this.code, 1500,0.9);
     }
 
   }

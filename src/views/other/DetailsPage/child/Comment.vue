@@ -32,6 +32,8 @@
 import {SetComment} from "../../../../network/article";
 import {GetComment} from "../../../../network/article";
 import UserComment from "./UserComment";
+import {GetTokenStatus} from "../../../../network/user";
+
 export default {
   name: "Comment",
   data(){
@@ -60,9 +62,27 @@ export default {
     this.GetComment(obj)
   },
   methods:{
+    GetTokenStatus(token){
+      GetTokenStatus(token).then(res=>{
+        // console.log(res)
+        if(res.msg=='当前登录token无效，请重新登录'){
+          let routeData = this.$router.resolve({ path: '/login', query: {  } });
+          window.open(routeData.href, '_blank');
+        }else{
+          let obj={
+            content: this.textarea,
+            token:localStorage.getItem('elementToken'),
+            type:3,
+            refId:this.articleId,
+          }
+          this.SetComment(obj);
+          this.textarea="";
+        }
+      })
+    },
     SetComment(obj){
       SetComment(obj).then(res=>{
-        console.log(res)
+        // console.log(res)
         if(res.msg='success'){
           this.$message({
             message: '回复成功！',
@@ -81,7 +101,7 @@ export default {
     },
     GetComment(obj){
       GetComment(obj).then(res=>{
-        console.log(res)
+        // console.log(res)
         if(res.msg=='暂无数据'){
           this.commentList=false
         }else{
@@ -92,15 +112,7 @@ export default {
       })
     },
     submitClick(){
-
-      let obj={
-        content: this.textarea,
-        token:localStorage.getItem('elementToken'),
-        type:3,
-        refId:this.articleId,
-      }
-      this.SetComment(obj);
-      this.textarea="";
+      this.GetTokenStatus(localStorage.getItem('elementToken'))
     }
   }
 }

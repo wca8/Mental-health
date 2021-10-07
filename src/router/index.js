@@ -12,17 +12,32 @@ const Login=()=>import('@/views/other/login/Login')
 const Mailbox=()=>import('@/views/other/login/child/Mailbox')
 const Username=()=>import('@/views/other/login/child/Username')
 const Registered=()=>import('@/views/other/registered/Registered')
+const NameRegistered=()=>import('@/views/other/registered/NameRegistered')
 const User=()=>import('@/views/other/user/User')
 const Article=()=>import('@/views/other/user/child/tabcontrolChild/Article')
 const Like=()=>import('@/views/other/user/child/tabcontrolChild/Like')
 const Buddy=()=>import('@/views/other/user/child/tabcontrolChild/Buddy')
 const Vip=()=>import('@/views/other/user/child/tabcontrolChild/Vip')
+const Order=()=>import('@/views/other/user/child/tabcontrolChild/Order')
+const waitingForPay=()=>import('@/views/other/user/child/tabcontrolChild/child/waitingForPay')
+const WaitingForReceipt=()=>import('@/views/other/user/child/tabcontrolChild/child/WaitingForReceipt')
+const WaitingForComment =()=>import('@/views/other/user/child/tabcontrolChild/child/WaitingForComment')
+const WaitForDelivery=()=>import('@/views/other/user/child/tabcontrolChild/child/WaitForDelivery')
+const AllOrders=()=>import('@/views/other/user/child/tabcontrolChild/child/AllOrders')
+
 const Reward=()=>import('@/views/other/reward/Reward')
 const myPay=()=>import('@/views/other/myPay/myPay')
 const PostAnArticle=()=>import('@/views/other/Post_an_article/PostAnArticle')
 const AskQuestions=()=>import('@/views/other/Ask_questions/AskQuestions')
 const QuestionDetails=()=>import('@/views/other/Question_details/QuestionDetails')
 const ControlCenter=()=>import('@/views/other/controlCenter/ControlCenter')
+const RetrievePassword=()=>import('@/views/other/RetrievePassword/RetrievePassword')
+const Search=()=>import('@/views/other/search/Search')
+const TeacherDetail=()=>import('@/views/other/teacher_detail/TeacherDetail')
+const PurchaseService=()=>import('@/views/other/teacher_detail/child/PurchaseService')
+
+const OrderComment=()=>import('@/views/other/OrderComment/OrderComment')
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -109,7 +124,7 @@ const routes = [
     path: '/registered',
     component:Registered,
     meta:{
-      title:"心理栈-注册"
+      title:"心理栈-邮箱注册"
     }
   },
   {
@@ -134,9 +149,35 @@ const routes = [
     },
     children:[
       {
-        path: '/',
-        redirect:'article'
+        path: '',
+        redirect:'/user/order'
       },
+     {
+        path:"order",
+        component:Order,
+        children:[
+          {
+            path: '',
+            redirect:'/user/order/WaitingForReceipt'
+          },{
+            path:"WaitingForReceipt",
+            component:WaitingForReceipt
+          },{
+            path:"WaitForDelivery",
+            component:WaitForDelivery
+          },{
+            path:"WaitingForComment",
+            component:WaitingForComment
+          },{
+            path:"AllOrders",
+            component:AllOrders
+          },{
+            path:"waitingForPay",
+            component:waitingForPay
+          }
+
+        ]
+      } ,
       {
         path:"article",
         component:Article
@@ -191,7 +232,49 @@ const routes = [
     meta:{
       title:"心理栈-管理中心"
     }
+  },{
+    path: '/RetrievePassword',
+    component:RetrievePassword,
+    meta:{
+      title:"心理栈-找回密码"
+    }
+  },{
+    path: '/NameRegistered',
+    component:NameRegistered,
+    meta:{
+      title:"心理栈-用户名注册"
+    }
   },
+  {
+    path: '/Search',
+    component:Search,
+    meta:{
+      title:"心理栈-搜索中心"
+    }
+  }, {
+        path: '/TeacherDetail',
+        component: TeacherDetail,
+        meta: {
+            title: "心理栈-导师详情"
+        }
+    },
+    {
+        path: '/PurchaseService',
+        component:PurchaseService,
+        meta:{
+            title:"心理栈-购买服务"
+        }
+
+    },
+    {
+    path: '/OrderComment',
+    component:OrderComment,
+    meta:{
+      title:"心理栈-评价中心"
+    }
+
+   },
+
 
 
 ]

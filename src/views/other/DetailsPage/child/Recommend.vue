@@ -66,7 +66,7 @@ export default {
   methods:{
     GetarticleList(categoryId,page,pageSize){
       GetarticleList(categoryId,page,pageSize).then(res=>{
-        console.log(res)
+        // console.log(res)
         this.articleList=res.data;
       })
     },

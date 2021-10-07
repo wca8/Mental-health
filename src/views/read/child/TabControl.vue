@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import {mapMutations, mapState} from 'vuex';
+
 export default {
   name: "TabControl",
   data(){
@@ -18,10 +20,15 @@ export default {
       currentIndex:0
     }
   },
+  computed:{
+    // ...mapState("read", ["currentIndex"]),
+  },
   methods:{
+    // ...mapMutations("read", ["SetCurrentIndex"]),
     tabClick(index){
-      this.currentIndex=index
-      this.$emit('tabClick',index)
+      // this.SetCurrentIndex({index})
+      this.currentIndex=index;
+      this.$emit('tabClick',index);
     }
   },
   props:{

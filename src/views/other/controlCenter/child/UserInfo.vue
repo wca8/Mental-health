@@ -27,10 +27,19 @@
       </div>
 
       <div>
-        <div>我的简介:</div>
-        <div class="textarea-box">
-          暂未设置简介
+        <div>个性签名:</div>
+        <div v-if="ext.Signature!=''" class="textarea-box">
+          <div>{{ext.Signature}}</div>
         </div>
+        <div v-else>TA很懒，没有留下任何足迹！</div>
+      </div>
+
+      <div>
+        <div>我的简介:</div>
+        <div v-if="ext.textarea!=''" class="textarea-box">
+          <div>{{ext.textarea}}</div>
+        </div>
+        <div v-else>TA很懒，没有留下任何足迹！</div>
       </div>
 
       <el-button @click="modifyClick" type="success" round>修改资料</el-button>
@@ -88,7 +97,7 @@
         <div>个性签名：</div>
         <div class="input">
           <el-input
-              placeholder="请输入内容昵称"
+              placeholder="请输入内容个人签名"
               v-model="Signature"
               clearable>
           </el-input>
@@ -99,16 +108,20 @@
       <div>
         <div>我的简介:</div>
         <div class="textarea-box">
-          <el-input
-              type="textarea"
-              :rows="6"
-              placeholder="请输入内容个人简介"
-              v-model="textarea">
-          </el-input>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+            <el-form-item  prop="textarea">
+              <el-input
+                  type="textarea"
+                  :rows="6"
+                  placeholder="请输入内容个人简介"
+                  v-model="ruleForm.textarea">
+              </el-input>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
 
-      <el-button @click="modifyClick_" type="success" round>确认修改</el-button>
+      <el-button  @click="submitForm('ruleForm')"   type="success" round>确认修改</el-button>
     </div>
 
   </div>
@@ -117,6 +130,7 @@
 <script>
 import {SetUserInfo} from "../../../../network/user";
 import axios from "axios";
+import {mapMutations} from "vuex";
 export default {
   name: "UserInfo",
   data(){
@@ -130,6 +144,14 @@ export default {
       provinceList:[],
       city:'',
       cityList:[],
+      ruleForm: {
+        textarea:''
+      },
+      rules: {
+        textarea:[
+          {min: 5, max: 200, message: '长度在 5 到 200 个字符', trigger: 'blur'}
+        ],
+      }
     }
   },
   watch:{
@@ -138,14 +160,18 @@ export default {
     }
   },
   computed:{
-    showgender(){
 
-    }
   },
   props:{
     userInfo_:{
       type:Object,
        default(){
+        return {}
+      }
+    },
+   ext:{
+      type:Object,
+      default(){
         return {}
       }
     }
@@ -154,6 +180,17 @@ export default {
     this.GetProvince();
   },
   methods:{
+    ...mapMutations("user", ["SetUserInfoChange"]),
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.modifyClick_()
+        } else {
+          this.$message.error('输入内容不符合要求！！！');
+          return false;
+        }
+      });
+    },
     SetUserInfo(obj){
       SetUserInfo(obj).then(res=>{
         console.log(res)
@@ -162,7 +199,8 @@ export default {
             message: '信息修改成功！',
             type: 'success'
           });
-          this.$emit('Refresh_')
+          this.SetUserInfoChange();
+          this.$emit('Refresh_');
         }
       })
     },
@@ -205,12 +243,14 @@ export default {
         city:this.city,
         nick:this.nick,
         gender:this.radio,
-        extJsonStr:{
+        "extJsonStr":{
           "Signature":this.Signature,
-          "textarea":this.textarea,
+          "textarea":this.ruleForm.textarea,
         },
+        province:this.province,
         token:localStorage.getItem('elementToken')
       }
+      console.log(obj)
       this.SetUserInfo(obj)
     }
   }

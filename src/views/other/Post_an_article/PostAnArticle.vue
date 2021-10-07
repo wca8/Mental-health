@@ -88,11 +88,7 @@ export default  {
       options: [{
         value: 49289,
         label: '用户文章',
-      },
-        {
-          value:49509,
-          label: '贴吧中心',
-        }
+      }
 
       ],
       categoryId: '',

@@ -58,20 +58,17 @@ export default {
     GetHomeBanner(){
       GetHomeBanner().then(res=>{
         this.bannerList=res.data;
-        // console.log(res)
+        console.log(this.bannerList)
       })
     },
     GetArticleList(categoryId){
       GetarticleList(categoryId).then(res=>{
         this.articleList=res.data;
-        console.log(res)
-
       })
     },
     GetSortTitles(){
       GetSortTitles().then(res=>{
         this.sortTitles=res.data;
-        console.log(res)
       })
     },
 
