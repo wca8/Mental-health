@@ -55,9 +55,14 @@ export default {
 </script>
 
 <style scoped>
-.Favorites{
-
+@media screen and (max-width: 768px) {  
+  .main>div{
+    margin-right: 10px!important;
+    margin-left: 10px!important;
+  }
+  
 }
+
 .main{
   display: flex;
   justify-content: center;

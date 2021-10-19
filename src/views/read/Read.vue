@@ -24,6 +24,7 @@ export default {
     MyFooter,
   },
   created() {
+     window.scrollTo(0,0)
   },
   mounted() {
     // 监听滚动事件
@@ -54,9 +55,11 @@ export default {
 </script>
 
 <style scoped>
-
+@media screen and (max-width: 768px) {
+  
+}
 .read{
-  padding-top: 72px;
+  padding-top: 3.57rem;
   background-color: rgba(243,243,245,1);
   min-height: 100vh;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="buddy">
-    <h2>好友</h2>
+    <h2>该功能暂未开放</h2>
   </div>
 </template>
 

@@ -22,7 +22,7 @@ export default {
   created() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   },
-
+  
   methods:{
     backClick(){
       document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -32,8 +32,13 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .questios{
+    background-color: #fff!important;
+  }
+}
 .questios{
-  padding-top: 72px;
+  padding-top:3.75rem;
   min-height: 800px;
   background-color: rgba(243,243,243);
 }

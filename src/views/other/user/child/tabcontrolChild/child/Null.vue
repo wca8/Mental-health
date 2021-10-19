@@ -12,6 +12,11 @@ name: "Null"
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .null{
+    font-size: 1.285714rem!important;
+  }
+}
 .null{
   display: flex;
   justify-content: center;

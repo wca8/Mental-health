@@ -1,7 +1,7 @@
 <template>
   <div class="Tips">
     <i class="el-icon-warning-outline"></i>
-    温馨提示:心理栈暂未适配移动端页面，请使用PC端浏览器访问: heart1.top
+       提示:心理栈移动端网站暂不支持文章发布,帖子发布,体验更多功能,请访问PC端heart1.top
   </div>
 </template>
 

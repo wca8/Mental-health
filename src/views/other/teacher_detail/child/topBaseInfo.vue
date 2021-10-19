@@ -3,24 +3,22 @@
     <div ref="top" class="top">
       <div ref="info" class="info">
         <div class="Avatar">
-          <img :src="basicInfo.pic" alt="">
+          <img :src="basicInfo.pic" alt="" />
         </div>
         <div class="name">
-          <div class="name-item">{{basicInfo.name}}</div>
-          <div class="tags">{{basicInfo.tags}}</div>
+          <div class="name-item">{{ basicInfo.name }}</div>
+          <div class="tags">{{ basicInfo.tags }}</div>
           <div class="service-info">
             <div class="service-num">
               <div>
                 <div>心理栈服务人数</div>
-                <div>{{basicInfo.numberSells}}人</div>
+                <div>{{ basicInfo.numberSells }}人</div>
               </div>
               <div>
                 <div>收藏人数</div>
-                <div>{{basicInfo.numberFav}}人</div>
+                <div>{{ basicInfo.numberFav }}人</div>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -31,68 +29,108 @@
 <script>
 export default {
   name: "topBaseInfo",
-  props:{
-    basicInfo:{
-      type:Object,
-      default(){
-        return {}
-      }
-    }
+  props: {
+    basicInfo: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
-  mounted(){
-    this.$nextTick(()=>{
-      let h=(this.$refs.top.offsetHeight)/2;
-      this.$refs.info.style.top=h+'px'
-      this.$store.commit("advisoryModule/SetCenterTop",{centerTop:h})
-    })
+  mounted() {
+    this.$nextTick(() => {
+      let h = this.$refs.top.offsetHeight / 2;
+      this.$refs.info.style.top = h + "px";
+      this.$store.commit("advisoryModule/SetCenterTop", { centerTop: h });
+    });
   },
-}
+};
 </script>
 
 <style scoped>
-.top{
+@media screen and (max-width: 768px) {
+  .top {
+    width: 100% !important;
+  }
+  .Avatar {
+    width: 4.285714rem !important;
+    height: 4.285714rem !important;
+  }
+  .Avatar img {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .top {
+    min-width: 100vw !important;
+    background: url("https://dcdn.it120.cc/2021/08/13/cda91d9a-e56c-405a-abaf-b9440d65c41a.png")
+      no-repeat;
+    background-size: 100% 100%!important;
+    height: 7.857143rem!important;
+  }
+
+  .info {
+    width: 100vw !important;
+    top: 1.5rem !important;
+  }
+  .name {
+    width: 76% !important;
+  }
+  .name-item{
+    font-size: 1.428571rem!important;
+  }
+  .tags {
+    font-size: 1.071429rem !important;
+  }
+  .service-info{
+    bottom:-12vh!important;
+  }
+  .service-num  div {
+    font-size: 1.142857rem!important;
+  }
+}
+.top {
   height: 200px;
-  background: url("https://dcdn.it120.cc/2021/08/13/cda91d9a-e56c-405a-abaf-b9440d65c41a.png") no-repeat;
+  background: url("https://dcdn.it120.cc/2021/08/13/cda91d9a-e56c-405a-abaf-b9440d65c41a.png")
+    no-repeat;
   background-size: 100% auto;
   min-width: 1519px;
 }
-.info{
+.info {
   display: flex;
   margin: 0 auto;
   position: relative;
   width: 1184px;
   justify-content: space-between;
-
 }
-.Avatar{
+.Avatar {
   width: 190px;
-  height:190px;
+  height: 190px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid rgba(255,255,255,.3);
+  border: 4px solid rgba(255, 255, 255, 0.3);
 }
-.Avatar img{
+.Avatar img {
   width: 180px;
   height: 180px;
   border-radius: 10px;
 }
-.name{
+.name {
   width: 970px;
   position: relative;
 }
-.name-item{
+.name-item {
   font-size: 40px;
   font-weight: 550;
   color: white;
 }
-.tags{
+.tags {
   padding-top: 8px;
   color: white;
   font-size: 20px;
 }
-.service-info{
+.service-info {
   position: absolute;
   bottom: 10px;
   width: 100%;
@@ -102,19 +140,19 @@ export default {
   padding-left: 35px;
   box-sizing: border-box;
 }
-.service-num{
+.service-num {
   display: flex;
 }
-.service-num>div:nth-child(1){
+.service-num > div:nth-child(1) {
   margin-right: 56px;
 }
 
-.service-num>div>div:nth-of-type(1){
+.service-num > div > div:nth-of-type(1) {
   font-size: 16px;
-  color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, 0.5);
 }
-.service-num>div>div:nth-of-type(2){
-  color: rgb(103,194,58);
+.service-num > div > div:nth-of-type(2) {
+  color: rgb(103, 194, 58);
   padding-top: 8px;
   text-align: center;
   font-size: 35px;

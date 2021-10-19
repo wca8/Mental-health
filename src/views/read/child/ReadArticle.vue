@@ -2,18 +2,20 @@
   <div class="read-article">
     <div class="main">
       <div
-          v-for="item in articleList" class="item"
-          @click="articleClick(item.id,item.categoryId)">
+        v-for="item in articleList"
+        class="item"
+        @click="articleClick(item.id, item.categoryId)"
+      >
         <div class="left">
-          <img :src="item.pic" alt="">
+          <img :src="item.pic" alt="" />
         </div>
 
         <div class="right">
-          <h3 class="title0">{{item.title}}</h3>
-          <div class="descript">{{item.descript}}</div>
-          <div class="tags">#{{item.tags}}</div>
+          <h3 class="title0">{{ item.title }}</h3>
+          <div class="descript">{{ item.descript }}</div>
+          <div class="tags">#{{ item.tags }}</div>
           <div class="time">
-            {{item.dateAdd}}
+            {{ item.dateAdd }}
           </div>
         </div>
       </div>
@@ -23,62 +25,78 @@
 
 <script>
 export default {
-    name: "ReadArticle",
-    props:{
-      articleList:{
-        type:Array,
-        default(){
-          return []
-        }
-      }
+  name: "ReadArticle",
+  props: {
+    articleList: {
+      type: Array,
+      default() {
+        return [];
+      },
     },
-  methods:{
-    articleClick(id,categoryId){
-      let routeData = this.$router.resolve({ path: '/content', query: {  id,categoryId } });
-      window.open(routeData.href, '_blank');
-    }
-  }
-}
+  },
+  methods: {
+    articleClick(id, categoryId) {
+      let routeData = this.$router.resolve({
+        path: "/content",
+        query: { id, categoryId },
+      });
+      window.open(routeData.href, "_blank");
+    },
+  },
+};
 </script>
 
 <style scoped>
-.item{
+@media screen and (max-width: 768px) {
+  .item {
+    padding: 1.428571rem !important;
+  }
+  .left {
+    flex: 3 !important;
+  }
+
+  .right {
+    margin-left: .714286rem!important;
+  }
+}
+.item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: 2.857143rem;
   cursor: pointer;
 }
-.left{
+.left {
   flex: 2;
 }
-.left img{
+.left img {
   width: 100%;
 }
-.right{
+.right {
   flex: 7;
   margin-left: 25px;
 }
 
-.descript,title0,.tags{
+.descript,
+title0,
+.tags {
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-
 }
-.descript{
+.descript {
   -webkit-line-clamp: 2;
 }
 
-.title0{
+.title0 {
   -webkit-line-clamp: 2;
 }
-.tags{
+.tags {
   -webkit-line-clamp: 1;
-  color: rgba(74,179,68,1);
+  color: rgba(74, 179, 68, 1);
 }
-.time{
+.time {
   font-size: 14px;
   color: #cccccc;
 }

@@ -2,65 +2,71 @@
   <div class="tabControl">
     <div
       class="tabControl-item"
-      :class="{active:index===currentIndex}"
+      :class="{ active: index === currentIndex }"
       @click="tabClick(index)"
-      v-for="(item,index) in titles">
-      {{item.name}}
+      v-for="(item, index) in titles"
+    >
+      {{ item.name }}
     </div>
   </div>
 </template>
 
 <script>
-import {mapMutations, mapState} from 'vuex';
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "TabControl",
-  data(){
-    return{
-      currentIndex:0
-    }
+  data() {
+    return {
+      currentIndex: 0,
+    };
   },
-  computed:{
+  computed: {
     // ...mapState("read", ["currentIndex"]),
   },
-  methods:{
+  methods: {
     // ...mapMutations("read", ["SetCurrentIndex"]),
-    tabClick(index){
+    tabClick(index) {
       // this.SetCurrentIndex({index})
-      this.currentIndex=index;
-      this.$emit('tabClick',index);
-    }
+      this.currentIndex = index;
+      this.$emit("tabClick", index);
+    },
   },
-  props:{
-    titles:{
-      type:Array,
-      default(){
-        return []
-      }
-    }
-  }
-}
+  props: {
+    titles: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
+};
 </script>
 
 <style scoped>
-.tabControl{
+@media screen and (max-width: 768px) {
+  .tabControl-item {
+    flex: 25%!important;
+    text-align: center;
+    cursor: pointer;
+    line-height: 35px;
+  }
+}
+.tabControl {
   display: flex;
   background-color: #fff;
   z-index: 20;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
-.tabControl-item{
+.tabControl-item {
   flex: 1;
   text-align: center;
   cursor: pointer;
   line-height: 35px;
 }
 
-.active{
-  color:white ;
-  /*border-radius: 15px;*/
-  /*background-color: rgb(74,179,68);*/
-  color:rgb(74,179,68) ;
+.active {
+  color: rgb(74, 179, 68);
 }
-
 </style>

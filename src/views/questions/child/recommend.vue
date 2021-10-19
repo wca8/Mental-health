@@ -27,9 +27,12 @@ export default {
 </script>
 
 <style scoped>
+.main{
+  padding-top: 30px;
+}
 .top{
   display: flex;
   justify-content: space-evenly;
-  margin: 30px 0;
+  /* margin: 30px 0; */
 }
 </style>

@@ -29,6 +29,14 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .main_{
+    padding: 0!important;
+  }
+  /* .nav a{
+    white-space:nowrap!important;
+  } */
+}
 .main_{
   width: 100%;
   min-height: 80vh;

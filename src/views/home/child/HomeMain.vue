@@ -14,8 +14,7 @@ export default {
 
 <style scoped>
 .home-main{
-  width: 980px;
-  min-width: 980px;
+  max-width: 980px;
   margin: 0 auto;
 
 }

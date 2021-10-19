@@ -34,7 +34,7 @@
               class="upload-demo"
               action="#"
               :on-change="uploadCertificateChange"
-              multiple
+               multiple
               :limit="1"
               :file-list="fileList"
               :auto-upload="false"

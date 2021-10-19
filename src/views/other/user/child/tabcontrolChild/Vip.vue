@@ -1,6 +1,6 @@
 <template>
   <div class="vip">
-    <H2>会员</H2>
+    <H2>该功能暂未开放</H2>
   </div>
 </template>
 

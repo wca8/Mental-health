@@ -31,15 +31,24 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  .tab-bar-item{
+    margin-bottom: 1.071429rem;
+    font-size: 1.142857rem!important;
+  }
+}
 .tab-bar-item{
   flex: 1;
-  font-size: 14px;
+  font-size:1rem;
   align-items: center;
   display: flex;
   justify-content: center;
   cursor: pointer;
-  padding: 2px 0px;
+  padding:.142857rem 0px;
   border-right: 1px dashed #ccc
 }
+
+</style>
+<style>
 
 </style>

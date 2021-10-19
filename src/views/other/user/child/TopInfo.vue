@@ -44,6 +44,16 @@ name: "TopInfo",
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+.bottom>div{
+  justify-content: space-between;
+}
+.left{
+  width: 3.571429rem!important;
+  height: 3.571429rem!important;
+}
+}
+
 .top-info{
   display: flex;
   align-items: center;

@@ -15,7 +15,7 @@ name: "MainBox"
 
 <style scoped>
 .main-box{
-  width: 1180px;
+  max-width: 1180px;
   margin: 0 auto;
   min-height: 100vh;
 

@@ -84,6 +84,9 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 768px) {
+  
+}
 .article{
   min-height: 80vh;
   background-color: #fff;

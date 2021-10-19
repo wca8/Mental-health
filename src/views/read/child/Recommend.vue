@@ -56,7 +56,7 @@ export default {
 <style scoped>
 .recommend{
   height: 100%;
-  padding:20px;
+  /* padding:20px; */
 }
 .top a{
   display: block;
